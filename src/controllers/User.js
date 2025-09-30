@@ -24,9 +24,9 @@ export const SignIn = async (req, res) => {
     try {
         //kiểm tra account đã được tạo hay chưa
         const exitUser = await User.findOne({ userName: userName });
-        if (!exitUser) return res.status(401).json({ message: 'Tài khoản chưa được đăng kí' });
+        if (!exitUser) return res.status(404).json({ message: 'Tài khoản chưa được đăng kí' });
         //Check password
-        const isMatch = await bcrypt.compare(password, exitUser.password);
+        const isMatch = bcrypt.compare(password, exitUser.password);
         if (!isMatch) return res.status(401).json({ message: 'Sai mật khẩu' });
         //tạo token
         const token = generateToken({ _id: exitUser._id, userName: exitUser.userName });
