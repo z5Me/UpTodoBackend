@@ -3,6 +3,7 @@ import cors from "cors";
 import connectDB from "./connectDB.js";
 import { config } from 'dotenv';
 import userRouter from "./routers/User.js";
+import taskRouter from "./routers/Task.js";
 
 config();
 
@@ -20,8 +21,8 @@ app.get("/", (req, res) => {
 });
 
 // Route API ví dụ
-app.use('/api/user', userRouter)
-
+app.use('/api/user', userRouter);
+app.use('/api/task', taskRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
