@@ -4,8 +4,8 @@ export const getAllTask = async (req, res) => {
     const { skip, limit } = req.query;
     try {
         const listTask = await Task.find()
-            .skip(skip)
-            .limit(limit)
+            .skip(skip || 0)
+            .limit(limit || 99)
             .sort({ createdAt: -1 });
         const total = await Task.countDocuments();
 

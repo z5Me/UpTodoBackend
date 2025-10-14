@@ -20,6 +20,14 @@ const taskSchema = new mongoose.Schema({
     priority: {
         type: Number,
         default: 999
+    },
+    complete: {
+        type: Boolean,
+        default: false,
+    },
+    unComplete: {
+        type: Boolean,
+        default: false,
     }
 }, { timestamps: true, timeseries: false });
 
