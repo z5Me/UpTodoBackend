@@ -1,13 +1,26 @@
 import Task from "../models/Task.js";
 
 export const getAllTask = async (req, res) => {
-    const { skip, limit } = req.query;
+    const { skip, limit, status } = req.query;
     try {
-        const listTask = await Task.find()
+        let listTask = await Task.find()
             .skip(skip || 0)
             .limit(limit || 99)
             .sort({ createdAt: -1 });
         const total = await Task.countDocuments();
+        if (status === 'TODAY') {
+            const dateNow = new Date();
+            listTask.filter((item) => {
+                if (item.data) return false;
+                const taskDate = new Date(item.date);
+
+                return (
+                    taskDate.getDate() === dateNow.getDate() &&
+                    taskDate.getMonth() === dateNow.getMonth() &&
+                    taskDate.getFullYear() === dateNow.getFullYear()
+                )
+            })
+        }
 
         return res.status(200).json({
             status: 'Thành công',

@@ -25,10 +25,6 @@ const taskSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    unComplete: {
-        type: Boolean,
-        default: false,
-    }
 }, { timestamps: true, timeseries: false });
 
 export default mongoose.model('Task', taskSchema);
