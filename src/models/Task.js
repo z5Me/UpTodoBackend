@@ -14,10 +14,12 @@ const taskSchema = new mongoose.Schema({
         trim: true
     },
     date: {
-        type: Date
+        type: Date,
+        default: null,
     },
     priority: {
-        type: Number
+        type: Number,
+        default: 999
     }
 }, { timestamps: true, timeseries: false });
 

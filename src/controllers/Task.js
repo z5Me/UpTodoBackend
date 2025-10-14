@@ -25,7 +25,7 @@ export const getAllTask = async (req, res) => {
 export const AddTask = async (req, res) => {
     const { task, desc, date, priority } = req.body;
     try {
-        const newTask = await Task.create({ task, desc, date: date | null, priority: priority | null });
+        const newTask = await Task.create({ task, desc, date: date, priority: priority });
         return res.status(201).json({
             status: 'Thành công',
             data: newTask
