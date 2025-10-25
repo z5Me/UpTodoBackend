@@ -38,3 +38,17 @@ export const SignIn = async (req, res) => {
         return res.status(500).json({ message: 'Internal server' });
     }
 }
+
+export const ChangeAccountName = async (req, res) => {
+    const { idUser, nameProfile } = req.body;
+    try {
+        //Kiểm tra account tồn tại hay chưa
+        const exitUser = await User.findOne({ _id: idUser });
+        if (!exitUser) return res.status(400).json({ message: 'Tài khoản không tồn tại' });
+        //Thay đổi tên trong profile
+        console.log('EXIT USER', exitUser);
+    } catch (error) {
+        console.log('Error at ChangeAccountName', error);
+        return res.status(500).json({ message: 'Internal Server' });
+    }
+}
