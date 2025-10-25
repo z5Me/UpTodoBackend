@@ -46,9 +46,32 @@ export const ChangeAccountName = async (req, res) => {
         const exitUser = await User.findOne({ _id: idUser });
         if (!exitUser) return res.status(400).json({ message: 'Tài khoản không tồn tại' });
         //Thay đổi tên trong profile
-        console.log('EXIT USER', exitUser);
+        exitUser.nameProfile = nameProfile;
+        await exitUser.save();
+        //Trả dữ liệu
+        return res.status(200).json({ status: 'Thành công', data: exitUser });
     } catch (error) {
         console.log('Error at ChangeAccountName', error);
+        return res.status(500).json({ message: 'Internal Server' });
+    }
+}
+
+export const ChangePassword = async (req, res) => {
+    const { idUser, password, newPassword } = req.body;
+    try {
+        //Kiểm tra account tồn tại hay chưa
+        const exitUser = await User.findOne({ _id: idUser });
+        if (!exitUser) return res.status(400).json({ message: 'Tài khoản không tồn tại' });
+        //Kiểm tra mật khẩu cũ
+        const isMatch = bcrypt.compare(password, exitUser.password);
+        if (!isMatch) return res.status(401).json({ message: 'Mật khẩu cũ không trùng khớp' });
+        //Thay đổi mật khẩu
+        exitUser.password = newPassword;
+        await exitUser.save();
+        //Trả dữ liệu
+        return res.status(200).json({ status: 'Thành công', data: exitUser });
+    } catch (error) {
+        console.log('Error at Change Password', error);
         return res.status(500).json({ message: 'Internal Server' });
     }
 }
