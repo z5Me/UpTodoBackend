@@ -4,7 +4,7 @@ import Task from "../models/Task.js";
 export const getAllTask = async (req, res) => {
     const { skip, limit, status } = req.query;
     try {
-        let listTask = await Task.find()
+        let listTask = await Task.find({ isDelete: false })
             .populate([
                 { path: 'category', modal: 'Category' }
             ])

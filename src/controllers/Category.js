@@ -3,7 +3,7 @@ import Category from "../models/Category.js";
 export const getAllCategory = async (req, res) => {
     const { skip, limit } = req.query;
     try {
-        const getAll = await Category.find()
+        const getAll = await Category.find({ isDelete: false })
             .skip(skip || 0)
             .limit(limit || 99)
             .sort({ createdAt: -1 });
