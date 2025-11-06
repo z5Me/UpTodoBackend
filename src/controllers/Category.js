@@ -2,12 +2,10 @@ import Category from "../models/Category.js";
 
 export const getAllCategory = async (req, res) => {
     const { skip, limit } = req.query;
-    console.log('skip', skip);
-    console.log('limit', limit);
     try {
         const getAll = await Category.find({ isDelete: false })
             .skip(skip || 0)
-            .limit(limit || 99)
+            .limit(limit || 0)
             .sort({ createdAt: -1 });
 
         const total = await Category.countDocuments({ isDelete: false });

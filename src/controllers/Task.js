@@ -9,7 +9,7 @@ export const getAllTask = async (req, res) => {
                 { path: 'category', modal: 'Category' }
             ])
             .skip(skip || 0)
-            .limit(limit || 99)
+            .limit(limit || 0)
             .sort({ createdAt: -1 });
         const total = await Task.countDocuments({ isDelete: false });
         if (status === 'TODAY') {
