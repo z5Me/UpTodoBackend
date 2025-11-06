@@ -21,10 +21,18 @@ const taskSchema = new mongoose.Schema({
         type: Number,
         default: 999
     },
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category'
+    },
     complete: {
         type: Boolean,
         default: false,
     },
+    isDelete: {
+        type: Boolean,
+        default: false,
+    }
 }, { timestamps: true, timeseries: false });
 
 export default mongoose.model('Task', taskSchema);

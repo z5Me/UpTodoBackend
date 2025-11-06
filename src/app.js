@@ -4,6 +4,7 @@ import connectDB from "./connectDB.js";
 import { config } from 'dotenv';
 import userRouter from "./routers/User.js";
 import taskRouter from "./routers/Task.js";
+import categoryRouter from "./routers/Category.js";
 
 config();
 
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 // Route API ví dụ
 app.use('/api/user', userRouter);
 app.use('/api/task', taskRouter);
+app.use('/api/category', categoryRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);

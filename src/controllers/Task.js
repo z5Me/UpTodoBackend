@@ -1,9 +1,13 @@
+import Category from "../models/Category.js";
 import Task from "../models/Task.js";
 
 export const getAllTask = async (req, res) => {
     const { skip, limit, status } = req.query;
     try {
         let listTask = await Task.find()
+            .populate([
+                { path: 'category', modal: 'Category' }
+            ])
             .skip(skip || 0)
             .limit(limit || 99)
             .sort({ createdAt: -1 });
@@ -38,9 +42,12 @@ export const getAllTask = async (req, res) => {
 }
 
 export const AddTask = async (req, res) => {
-    const { task, desc, date, priority } = req.body;
+    const { task, desc, date, priority, idCategory } = req.body;
     try {
-        const newTask = await Task.create({ task, desc, date: date, priority: priority });
+        const checkCategory = await Category.findOne({ _id: idCategory });
+        if (!checkCategory) return res.status(404).json({ status: 'Thất bại', message: 'Không tìm thấy category' });
+
+        const newTask = await Task.create({ task, desc, date: date, priority: priority, category: idCategory });
         return res.status(201).json({
             status: 'Thành công',
             data: newTask
