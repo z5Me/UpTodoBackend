@@ -8,7 +8,7 @@ export const getAllCategory = async (req, res) => {
             .limit(limit || 99)
             .sort({ createdAt: -1 });
 
-        const total = await Category.countDocuments();
+        const total = await Category.countDocuments({ isDelete: false });
 
         return res.status(200).json({ status: 'Thành công', skip, limit, total, data: getAll });
     } catch (error) {
